@@ -13,23 +13,39 @@ class Quiz extends StatefulWidget{
 
 class _QuizState extends State<Quiz> {
 
-  Widget? activeScreen; // You can store widges in a variable, ? because it can be null
+  var activeScreen = 'start-screen';
 
-// We need to initilise the state of the StartScreen before the rest is execurted
-  @override
-  void initState() {
-    activeScreen =  StartScreen(switchScreen);
-    super.initState();
-  }
 
+  // Widget? activeScreen; // You can store widges in a variable, ? because it can be null
+
+// We need to initilise the state of the StartScreen before the rest is executed
+  // @override
+  // void initState() {
+  //   activeScreen =  StartScreen(switchScreen);
+  //   super.initState();
+  // }
+
+// This function is called after we press the button. This is because the switchScreen is passed in the StartScreen
+// constructor. The setScreen(() {})  executes again the build() function.
   void switchScreen(){
     setState(() {
-      activeScreen = const QuestionsScreen();
+      // activeScreen = const QuestionsScreen();
+      activeScreen = 'questions-screen';
     });
   }
   
   @override
   Widget build(context){
+    // final screenWidget = activeScreen == 'start-screen' 
+    //       ? StartScreen(switchScreen) 
+    //       : const QuestionsScreen();
+    Widget screenWidget = StartScreen(switchScreen);
+
+    if (activeScreen == 'questions-screen'){
+      screenWidget = const QuestionsScreen();
+    }
+
+
     return MaterialApp(
       home: Scaffold(
         body: Container(
@@ -40,7 +56,7 @@ class _QuizState extends State<Quiz> {
            begin: Alignment.topLeft,
            end: Alignment.bottomRight
             )
-          ),child: activeScreen
+          ),child: screenWidget
         ),
       ),
     );
