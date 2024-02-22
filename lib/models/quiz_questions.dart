@@ -6,7 +6,7 @@ class QuizQuestion{
   final List<String> answers;
 
   // We shuffle the list but we create a copy of the original list in order not to change the original 
-  List<String> getShuffledAnswers(){
+  List<String> get shuffledAnswers {
     final shuffledList = List.of(answers);
     shuffledList.shuffle();
     return shuffledList;

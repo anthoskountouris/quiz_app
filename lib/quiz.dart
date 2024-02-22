@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:quizz_app/data/questions.dart';
 import 'package:quizz_app/questions_screen.dart';
 import 'package:quizz_app/start_screen.dart';
+// import 'package:quizz_app/data/questions.dart';
+import 'package:quizz_app/results_screen.dart';
 
 class Quiz extends StatefulWidget{
   const Quiz({super.key});
@@ -12,6 +15,8 @@ class Quiz extends StatefulWidget{
 }
 
 class _QuizState extends State<Quiz> {
+  
+  List<String> selectedAnswers = []; // This list contains our pre-defined answers for each question (1-1.2-2,...)
 
   var activeScreen = 'start-screen';
 
@@ -33,6 +38,26 @@ class _QuizState extends State<Quiz> {
       activeScreen = 'questions-screen';
     });
   }
+
+  void chooseAnswer(String answer){
+    selectedAnswers.add(answer);
+
+    if(selectedAnswers.length == questions.length){
+      setState(() {
+        // selectedAnswers = [];        
+        activeScreen = 'results-screen';
+      });
+    }
+  }
+
+  void restartQuiz(){
+    setState(() {
+      selectedAnswers = [];        
+      activeScreen = 'start-screen';
+    });
+  }
+
+
   
   @override
   Widget build(context){
@@ -42,7 +67,12 @@ class _QuizState extends State<Quiz> {
     Widget screenWidget = StartScreen(switchScreen);
 
     if (activeScreen == 'questions-screen'){
-      screenWidget = const QuestionsScreen();
+      screenWidget = QuestionsScreen(
+        onSelectAnswer: chooseAnswer); //Since we added the function in the constructor, we pass it here
+    }
+
+    if (activeScreen == 'results-screen'){
+      screenWidget = ResultsScreen(chosenAnswers: selectedAnswers, onRestart: restartQuiz);
     }
 
 
