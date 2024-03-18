@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:quizz_app/results_screen.dart';
-
 
 class QuestionsSummary extends StatelessWidget{
   QuestionsSummary({super.key, required this.summaryData});
